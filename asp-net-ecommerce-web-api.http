@@ -1,6 +1,33 @@
-@asp_net_ecommerce_web_api_HostAddress = http://localhost:5160
 
-GET {{asp_net_ecommerce_web_api_HostAddress}}/weatherforecast/
-Accept: application/json
+GET http://localhost:5160
 
 ###
+
+GET http://localhost:5160/api/categories
+# GET http://localhost:5160/api/categories?searchValue=clothing
+
+###
+
+POST http://localhost:5160/api/categories
+Content-Type: application/json 
+
+{
+  "name": "electronics",
+  "description": "bad categiry"
+}
+
+
+###
+
+PUT http://localhost:5160/api/categories/f43991f6-0d0a-40ec-9ad2-764eed41b51b
+Content-Type: application/json 
+
+{
+  "name": "c",
+  "description": ""
+}
+
+
+###
+
+DELETE http://localhost:5160/api/categories/347ad62c-c479-4dec-831d-ad36139b535e
