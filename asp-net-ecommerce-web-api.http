@@ -12,22 +12,22 @@ POST http://localhost:5160/api/categories
 Content-Type: application/json 
 
 {
-  "name": "electronics",
-  "description": "bad categiry"
+  "name": "smart phone",
+  "description": "good categiry"
 }
 
 
 ###
 
-PUT http://localhost:5160/api/categories/f43991f6-0d0a-40ec-9ad2-764eed41b51b
+PUT http://localhost:5160/api/categories/6c49cb58-9315-48ce-b6f2-95f41109858d
 Content-Type: application/json 
 
 {
-  "name": "c",
-  "description": ""
+  "name": "clothing",
+  "description": "clothing is an essential category"
 }
 
 
 ###
 
-DELETE http://localhost:5160/api/categories/347ad62c-c479-4dec-831d-ad36139b535e
+DELETE http://localhost:5160/api/categories/679e1f85-746e-4f8c-85c2-8ee2404f844f
