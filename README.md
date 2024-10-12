@@ -25,9 +25,10 @@ Understand how data is passed to and from API endpoints with Controller and how 
 
 - [x] Model binding: Passing data to methods via route, query string, and request body.
 - [x] Route Constraint
-- [] Input validation and custom validation.
-- [] Model, DTOs
-- [] Model validation using data annotations (e.g., `[Required]`, `[Range]`).
-- [] Controllers and actions in ASP.NET Core.
-- [] Routing: Attribute routing, conventional routing.
+- [x] Input validation and custom validation.
+- [x] Model, Controllers and actions in ASP.NET Core.
+- [x] Routing: Attribute routing, conventional routing.
+- [x] Model VS DTOs
+- [x] Model validation using data annotations (e.g., `[Required]`, `[Range]`).
+- [] Centralized API Response
 - [] URL Naming Best practices

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using asp_net_ecommerce_web_api.DTOs;
 using asp_net_ecommerce_web_api.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,32 +18,23 @@ namespace asp_net_ecommerce_web_api.Controllers
 
         // GET: /api/categories => Read categories
         [HttpGet]
-        public IActionResult GetCategories([FromQuery] string searchValue = "")
+        public IActionResult GetCategories()
         {
-            if (!string.IsNullOrEmpty(searchValue))
+            var categoryList = categories.Select(c => new CategoryReadDto
             {
-                var searchedCategories = categories.Where(c => c.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
-                return Ok(searchedCategories);
-            }
+                CategoryId = c.CategoryId,
+                Name = c.Name,
+                Description = c.Description,
+                CreatedAt = c.CreatedAt
+            }).ToList();
 
-            return Ok(categories);
+            return Ok(ApiResponse<List<CategoryReadDto>>.SuccessResponse(categoryList, 200, "Catgeories returned successfully"));
         }
 
         // POST: /api/categories => Create a category
         [HttpPost]
-        public IActionResult CreateCategory([FromBody] Category categoryData)
+        public IActionResult CreateCategory([FromBody] CategoryCreateDto categoryData)
         {
-            // Console.WriteLine($"{categoryData}");
-
-            if (string.IsNullOrEmpty(categoryData.Name))
-            {
-                return BadRequest("Category Name is required and can not be empty");
-            }
-            if (categoryData.Name.Length < 2)
-            {
-                return BadRequest("Category name must be atleast 2 characters long");
-            }
-
             var newCategory = new Category
             {
                 CategoryId = Guid.NewGuid(),
@@ -50,43 +42,34 @@ namespace asp_net_ecommerce_web_api.Controllers
                 Description = categoryData.Description,
                 CreatedAt = DateTime.UtcNow,
             };
+
             categories.Add(newCategory);
-            return Created($"/api/categories/{newCategory.CategoryId}", newCategory);
+
+            var categoryReadDto = new CategoryReadDto
+            {
+                CategoryId = newCategory.CategoryId,
+                Name = newCategory.Name,
+                Description = newCategory.Description,
+                CreatedAt = newCategory.CreatedAt,
+            };
+
+            return Created($"/api/categories/{newCategory.CategoryId}", ApiResponse<CategoryReadDto>.SuccessResponse(categoryReadDto, 201, "Catgeory created successfully"));
         }
 
         // PUT: /api/categories/{categoryId} => Update a category
         [HttpPut("{categoryId:guid}")]
-        public IActionResult UpdateCategoryById(Guid categoryId, [FromBody] Category categoryData)
+        public IActionResult UpdateCategoryById(Guid categoryId, [FromBody] CategoryUpdateDto categoryData)
         {
-            if (categoryData == null)
-            {
-                return BadRequest("Category data is missing");
-            }
-
             var foundCategory = categories.FirstOrDefault(category => category.CategoryId == categoryId);
             if (foundCategory == null)
             {
-                return NotFound("Category with this id does not exist");
+                return NotFound(ApiResponse<object>.ErrorResponse(new List<string> { "Category with this ID does not exist" }, 404, "Validation failed"));
             }
 
-            if (!string.IsNullOrEmpty(categoryData.Name))
-            {
-                if (categoryData.Name.Length >= 2)
-                {
-                    foundCategory.Name = categoryData.Name;
-                }
-                else
-                {
-                    return BadRequest("Category name must be atleast 2 characters long");
-                }
-            }
+            foundCategory.Name = categoryData.Name;
+            foundCategory.Description = categoryData.Description;
 
-            if (!string.IsNullOrWhiteSpace(categoryData.Description))
-            {
-                foundCategory.Description = categoryData.Description;
-            }
-
-            return NoContent();
+            return Ok(ApiResponse<object>.SuccessResponse(null, 204, "Catgeory Updated successfully"));
         }
 
         // DELETE: /api/categories/{categoryId} => Delete a category by Id
@@ -96,10 +79,10 @@ namespace asp_net_ecommerce_web_api.Controllers
             var foundCategory = categories.FirstOrDefault(category => category.CategoryId == categoryId);
             if (foundCategory == null)
             {
-                return NotFound("Category with this id does not exist");
+                return NotFound(ApiResponse<object>.ErrorResponse(new List<string> { "Category with this ID does not exist" }, 404, "Validation failed"));
             }
             categories.Remove(foundCategory);
-            return NoContent();
+            return Ok(ApiResponse<object>.SuccessResponse(null, 204, "Category deleted successfully"));
         }
     }
 }

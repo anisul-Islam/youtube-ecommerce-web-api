@@ -19,15 +19,15 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5160/api/categories/6c49cb58-9315-48ce-b6f2-95f41109858d
+PUT http://localhost:5160/api/categories/dc67e751-a465-4f48-9221-0f974f0036ea
 Content-Type: application/json 
 
 {
   "name": "clothing",
-  "description": "clothing is an essential category"
+  "description": ""
 }
 
 
 ###
 
-DELETE http://localhost:5160/api/categories/679e1f85-746e-4f8c-85c2-8ee2404f844f
+DELETE http://localhost:5160/api/categories/e54efef8-249e-40ac-9f12-764412296b90
