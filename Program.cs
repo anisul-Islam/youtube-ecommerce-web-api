@@ -1,5 +1,6 @@
-using asp_net_ecommerce_web_api.Controllers;
 using Microsoft.AspNetCore.Mvc;
+
+using asp_net_ecommerce_web_api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

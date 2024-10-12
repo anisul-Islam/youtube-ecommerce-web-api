@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
 using asp_net_ecommerce_web_api.DTOs;
 using asp_net_ecommerce_web_api.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace asp_net_ecommerce_web_api.Controllers
 {

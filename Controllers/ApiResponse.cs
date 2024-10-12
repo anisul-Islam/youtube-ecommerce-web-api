@@ -11,13 +11,9 @@ namespace asp_net_ecommerce_web_api.Controllers
         public string Message { get; set; } = string.Empty;
         public T? Data { get; set; }
         public List<string>? Errors { get; set; }
-
         public int StatusCode { get; set; }
-
         public DateTime TimeStamp { get; set; }
-
-
-        private ApiResponse(bool success, string message, T? data = default, List<string>? errors, int statusCode)
+        private ApiResponse(bool success, string message, T? data, List<string>? errors, int statusCode)
         {
             Success = success;
             Message = message;
@@ -28,7 +24,7 @@ namespace asp_net_ecommerce_web_api.Controllers
         }
 
         // static method for creating a successful response
-        public static ApiResponse<T> SuccessResponse(T? data = default, int statusCode, string message = "")
+        public static ApiResponse<T> SuccessResponse(T? data, int statusCode, string message = "")
         {
             return new ApiResponse<T>(true, message, data, null, statusCode);
         }
@@ -36,9 +32,8 @@ namespace asp_net_ecommerce_web_api.Controllers
         // static method for creating an error response
         public static ApiResponse<T> ErrorResponse(List<string> errors, int statusCode, string message = "")
         {
-            return new ApiResponse<T>(false, message, default, errors, statusCode);
+            return new ApiResponse<T>(false, message, default(T), errors, statusCode);
         }
-
 
     }
 }
